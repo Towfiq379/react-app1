@@ -1,20 +1,14 @@
 import React, { useState } from 'react'
 
-async function sha256HexFromBytes(bytes: Uint8Array): Promise<string> {
-  const buf = await crypto.subtle.digest('SHA-256', bytes)
+async function sha256HexFromBytes(bytes: ArrayBufferLike | ArrayBufferView): Promise<string> {
+  const buf = await crypto.subtle.digest('SHA-256', bytes as BufferSource)
   const arr = Array.from(new Uint8Array(buf))
   return arr.map((b) => b.toString(16).padStart(2, '0')).join('')
 }
-
-async function sha256Hex(input: string): Promise<string> {
-  const enc = new TextEncoder().encode(input)
-  return sha256HexFromBytes(enc)
-}
-
 function hexToBits(hex: string): string {
   return hex
     .split('')
-    .map((h) => parseInt(h, 16).toString(2).padStart(4, '0'))
+    .map((h) => Number.parseInt(h, 16).toString(2).padStart(4, '0'))
     .join('')
 }
 

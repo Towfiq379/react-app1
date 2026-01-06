@@ -39,7 +39,7 @@ function bufferToHex(buf: ArrayBuffer): string {
 function hexToBuffer(hex: string): ArrayBuffer {
   const buf = new Uint8Array(hex.length / 2)
   for (let i = 0; i < hex.length; i += 2) {
-    buf[i / 2] = parseInt(hex.substr(i, 2), 16)
+    buf[i / 2] = Number.parseInt(hex.slice(i, i + 2), 16)
   }
   return buf.buffer
 }
